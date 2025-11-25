@@ -7,6 +7,7 @@ import io.ktor.client.statement.bodyAsText
 import io.ktor.http.isSuccess
 import kotlinx.coroutines.flow.flow
 import kotlinx.serialization.Serializable
+import org.example.project.BuildConfig
 import org.example.project.di.initKoin
 
 
@@ -19,7 +20,7 @@ suspend fun main() {
 
 class PhotographerAPI(val client: HttpClient ) {
     private val API_URL =
-        "https://www.amonteiro.fr/api/photographers?apikey=${getPhotographerAPIKey()}"
+        "https://www.amonteiro.fr/api/photographers?apikey=${BuildConfig.PHOTOGRAPHER_API_KEY}"
 
 
     //GET

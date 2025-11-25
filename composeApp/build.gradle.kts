@@ -10,6 +10,8 @@ plugins {
     alias(libs.plugins.composeHotReload)
 
     kotlin("plugin.serialization") version "2.1.0"
+    //plugin pour injecter dans BuildConfig les clés de local.properties
+    id("com.github.gmazzo.buildconfig") version "5.5.1"
 }
 
 // Read API key from local.properties
@@ -18,8 +20,6 @@ val localPropertiesFile = rootProject.file("local.properties")
 if (localPropertiesFile.exists()) {
     localProperties.load(localPropertiesFile.inputStream())
 }
-val photographerAPIKey: String? = localProperties.getProperty("photographer.api.key")
-
 
 kotlin {
     androidTarget {
@@ -35,11 +35,6 @@ kotlin {
         iosTarget.binaries.framework {
             baseName = "ComposeApp"
             isStatic = true
-
-            if (photographerAPIKey != null) {
-                // Pass the API key to the Kotlin/Native compiler to be added to the Info.plist
-                freeCompilerArgs += "-Xbinary=PHOTOGRAPHER_API_KEY=$photographerAPIKey"
-            }
         }
     }
 
@@ -95,7 +90,6 @@ kotlin {
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
-
             implementation("io.insert-koin:koin-test:4.1.+")
             implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.10.1")
         }
@@ -113,6 +107,19 @@ kotlin {
     }
 }
 
+buildConfig {
+    // Définit le nom de la classe générée
+    className("BuildConfig")
+    // Le package où la classe sera générée
+    packageName("org.example.project")
+
+    // Récupération sécurisée de la clé
+    val apiKey = localProperties.getProperty("photographer.api.key") ?: ""
+
+    // Crée le champ pour tous les targets (Android, iOS, Desktop)
+    buildConfigField("String", "PHOTOGRAPHER_API_KEY", "\"$apiKey\"")
+}
+
 android {
     namespace = "org.example.project"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
@@ -123,12 +130,6 @@ android {
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = 1
         versionName = "1.0"
-        //Ajoute une constante dans la class BuildConfig généré par Gradle
-        buildConfigField("String", "PHOTOGRAPHER_API_KEY", "\"${photographerAPIKey ?: ""}\"")
-    }
-    //Génère le fichier BuildConfig
-    buildFeatures {
-        buildConfig = true
     }
     packaging {
         resources {
@@ -153,11 +154,6 @@ dependencies {
 compose.desktop {
     application {
         mainClass = "org.example.project.MainKt"
-
-        //Injecte la clé d'API dans une variable d'environnement à l'appel du programme
-        if (localProperties.containsKey("photographer.api.key")) {
-            jvmArgs += "-Dphotographer.api.key=$photographerAPIKey"
-        }
 
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
