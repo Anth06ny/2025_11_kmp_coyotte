@@ -4,5 +4,8 @@
 <dict>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
+	<!-- Ajout de la permission de localisation -->
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>Cette application a besoin de votre localisation pour vous offrir une expérience personnalisée.</string>
 </dict>
 </plist>

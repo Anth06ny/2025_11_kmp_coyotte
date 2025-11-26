@@ -22,6 +22,17 @@ val localPropertiesFile = rootProject.file("local.properties")
 if (localPropertiesFile.exists()) {
     localProperties.load(localPropertiesFile.inputStream())
 }
+//-----------------------------
+//Exemple de Keystore Attendu
+
+//photographer.api.key=1234
+//
+//#Par défaut ira le chercher dans composeApp
+//KEYSTORE_FILE=keystore.jks
+//KEYSTORE_PASSWORD=aaaaaa
+//KEY_ALIAS=key0
+//KEY_PASSWORD=aaaaaa
+//------------------------------------
 
 kotlin {
     androidTarget {
