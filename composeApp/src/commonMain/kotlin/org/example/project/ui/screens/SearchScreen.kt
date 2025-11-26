@@ -40,11 +40,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil3.compose.AsyncImage
-import dev.icerock.moko.permissions.PermissionState
 import kotlinproject.composeapp.generated.resources.Res
 import kotlinproject.composeapp.generated.resources.toto
 import org.example.project.model.Photographer
-import org.example.project.ui.LocationPermissionButton
 import org.example.project.ui.MyError
 import org.example.project.viewmodel.MainViewModel
 import org.jetbrains.compose.resources.painterResource
@@ -68,7 +66,6 @@ fun SearchScreen(
         val list = mainViewModel.dataList.collectAsStateWithLifecycle().value.filter { it.stageName.contains(searchText.value, true) }
         val errorMessage by mainViewModel.errorMessage.collectAsStateWithLifecycle()
         val runInProgress by mainViewModel.runInProgress.collectAsStateWithLifecycle()
-        var permissionState by remember { mutableStateOf(PermissionState.NotDetermined) }
 
 
         SearchBar(searchText = searchText)
@@ -117,11 +114,7 @@ fun SearchScreen(
                 Spacer(Modifier.size(ButtonDefaults.IconSpacing))
                 Text("Load data")
             }
-            LocationPermissionButton { permissionResult -> permissionState = permissionResult }
-
-
         }
-        Text(text = "Permission : ${permissionState.name}")
     }
 }
 
