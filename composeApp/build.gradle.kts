@@ -96,6 +96,10 @@ kotlin {
             implementation("app.cash.sqldelight:runtime:2.1.0")
             implementation("app.cash.sqldelight:coroutines-extensions:2.1.0")
 
+//            //Permission
+//            //api Rend les librairies utilisables egalement par les dépendances du module
+//            api("dev.icerock.moko:permissions:0.18.0")
+//            api("dev.icerock.moko:permissions-compose:0.18.0")
 
         }
         commonTest.dependencies {

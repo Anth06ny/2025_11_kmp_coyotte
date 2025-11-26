@@ -41,18 +41,16 @@ class MainViewModel(val photographerAPI: PhotographerAPI, val myDatabase: MyData
 
                 //Création d'une transaction
                 launch {
-                    photographerQueries.transaction {
 
-                        photographerQueries.transaction {
-                            photographers.forEach { photographer ->
-                                photographerQueries.insertOrReplacePhotographer(
-                                    photographer.id.toLong(),
-                                    photographer.stageName,
-                                    photographer.photoUrl,
-                                    photographer.story,
-                                    jsonParser.encodeToString(photographer.portfolio)
-                                )
-                            }
+                    photographerQueries.transaction {
+                        photographers.forEach { photographer ->
+                            photographerQueries.insertOrReplacePhotographer(
+                                photographer.id.toLong(),
+                                photographer.stageName,
+                                photographer.photoUrl,
+                                photographer.story,
+                                jsonParser.encodeToString(photographer.portfolio)
+                            )
                         }
                     }
                 }
