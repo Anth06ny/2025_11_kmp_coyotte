@@ -44,6 +44,7 @@ val apiModule = module {
 
     //Version avec injection automatique des objets connues
     singleOf(::PhotographerAPI)
+
 }
 
 val locationModule = module {

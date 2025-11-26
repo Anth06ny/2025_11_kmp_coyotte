@@ -44,9 +44,9 @@ import coil3.compose.AsyncImage
 import kotlinproject.composeapp.generated.resources.Res
 import kotlinproject.composeapp.generated.resources.toto
 import org.example.project.model.Photographer
+import org.example.project.service.MyPermissionState
 import org.example.project.ui.LocationPermissionButton
 import org.example.project.ui.MyError
-import org.example.project.ui.MyPermissionState
 import org.example.project.viewmodel.MainViewModel
 import org.jetbrains.compose.resources.painterResource
 
