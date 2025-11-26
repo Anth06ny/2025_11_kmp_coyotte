@@ -160,7 +160,6 @@ android {
     }
 
 
-
 //    // Nom des l'APK générés
     applicationVariants.all {
         val variant = this
@@ -184,6 +183,19 @@ compose.desktop {
             packageName = "PhotographApp" //Nom dans l'application
             packageVersion = "1.0.0"
             description = "Une application de photographe"
+            vendor = "MonEntreprise"
+
+            windows {
+                shortcut = true
+                menu = true
+            }
+            macOS {
+                dockName = "PhotographApp"
+            }
+            linux {
+                shortcut = true
+            }
+
         }
     }
 }
