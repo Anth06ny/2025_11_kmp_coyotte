@@ -7,6 +7,7 @@ import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 import org.example.project.model.PhotographerAPI
 import org.example.project.model.databaseModule
+import org.example.project.service.LocationService
 import org.example.project.viewmodel.MainViewModel
 import org.koin.core.context.startKoin
 import org.koin.core.module.dsl.singleOf
@@ -18,7 +19,7 @@ import org.koin.dsl.module
 fun initKoin(appDeclaration: KoinAppDeclaration = {}) =
     startKoin {
         appDeclaration()
-        modules(apiModule, databaseModule(), viewModelModule)
+        modules(apiModule, databaseModule(), viewModelModule, locationModule)
     }.koin
 
 // Version pour iOS et Desktop
@@ -43,6 +44,10 @@ val apiModule = module {
 
     //Version avec injection automatique des objets connues
     singleOf(::PhotographerAPI)
+}
+
+val locationModule = module {
+    singleOf(::LocationService)
 }
 
 //Version spécifique au ViewModel

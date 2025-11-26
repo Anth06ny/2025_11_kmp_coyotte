@@ -9,8 +9,10 @@ import kotlinx.serialization.json.Json
 import org.example.project.db.MyDatabase
 import org.example.project.model.Photographer
 import org.example.project.model.PhotographerAPI
+import org.example.project.service.Location
+import org.example.project.service.LocationService
 
-class MainViewModel(val photographerAPI: PhotographerAPI, val myDatabase: MyDatabase) : ViewModel() {
+class MainViewModel(val photographerAPI: PhotographerAPI, val myDatabase: MyDatabase, val locationService: LocationService) : ViewModel() {
 
     private val _dataList = MutableStateFlow(emptyList<Photographer>())
     val dataList = _dataList.asStateFlow()
@@ -20,6 +22,9 @@ class MainViewModel(val photographerAPI: PhotographerAPI, val myDatabase: MyData
 
     private val _errorMessage = MutableStateFlow("")
     val errorMessage = _errorMessage.asStateFlow()
+
+    private val _location = MutableStateFlow<Location?>(null)
+    val location = _location.asStateFlow()
 
     private val photographerQueries = myDatabase.photographerStorageQueries
     private val jsonParser = Json { prettyPrint = true }
@@ -112,5 +117,11 @@ class MainViewModel(val photographerAPI: PhotographerAPI, val myDatabase: MyData
                 )
             )
         )
+    }
+
+    fun updateLocation() {
+        locationService.getCurrentLocation {
+            _location.value = it
+        }
     }
 }

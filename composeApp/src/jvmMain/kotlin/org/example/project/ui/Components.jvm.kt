@@ -19,3 +19,10 @@ actual fun PictureGallery(modifier: Modifier, urlList: List<String>) {
         }
     }
 }
+
+@Composable
+actual fun LocationPermissionButton(modifier: Modifier, onPermissionResult: (MyPermissionState) -> Unit) {
+
+    //Pas besoin dpécialement de bouton car on a forcement la permission
+    onPermissionResult(MyPermissionState.Granted)
+}

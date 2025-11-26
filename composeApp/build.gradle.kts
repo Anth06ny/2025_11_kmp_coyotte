@@ -1,4 +1,3 @@
-
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import java.util.Properties
@@ -58,6 +57,12 @@ kotlin {
             //Base de données
             implementation("app.cash.sqldelight:android-driver:2.1.0")
 
+            implementation("dev.icerock.moko:permissions:0.18.0")
+            implementation("dev.icerock.moko:permissions-compose:0.18.0")
+
+            implementation("com.google.android.gms:play-services-location:21.+")
+
+
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -96,10 +101,6 @@ kotlin {
             implementation("app.cash.sqldelight:runtime:2.1.0")
             implementation("app.cash.sqldelight:coroutines-extensions:2.1.0")
 
-//            //Permission
-//            //api Rend les librairies utilisables egalement par les dépendances du module
-//            api("dev.icerock.moko:permissions:0.18.0")
-//            api("dev.icerock.moko:permissions-compose:0.18.0")
 
         }
         commonTest.dependencies {
@@ -119,6 +120,9 @@ kotlin {
             //Client de requêtes spécifique à iOS
             implementation("io.ktor:ktor-client-darwin:3.2.2")
             implementation("app.cash.sqldelight:native-driver:2.1.0")
+
+            implementation("dev.icerock.moko:permissions:0.18.0")
+            implementation("dev.icerock.moko:permissions-compose:0.18.0")
         }
 
     }

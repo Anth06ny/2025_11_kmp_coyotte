@@ -27,4 +27,32 @@ fun MyError(
 }
 
 @Composable
-expect fun PictureGallery(modifier:Modifier = Modifier, urlList: List<String>)
+expect fun PictureGallery(modifier: Modifier = Modifier, urlList: List<String>)
+
+@Composable
+expect fun LocationPermissionButton(modifier: Modifier = Modifier, onPermissionResult: (MyPermissionState) -> Unit = {})
+
+enum class MyPermissionState {
+    /**
+     * Starting state for each permission.
+     */
+    NotDetermined,
+
+    /**
+     * Android-only. This could mean [NotDetermined] or [DeniedAlways], but the OS doesn't
+     * expose which of the two it is in all scenarios.
+     */
+    NotGranted,
+
+    Granted,
+
+    /**
+     * Android-only.
+     */
+    Denied,
+
+    /**
+     * On Android only applicable to Push Notifications.
+     */
+    DeniedAlways
+}

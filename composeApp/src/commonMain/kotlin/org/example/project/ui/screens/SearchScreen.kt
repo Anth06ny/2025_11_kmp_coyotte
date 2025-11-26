@@ -27,6 +27,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -43,7 +44,9 @@ import coil3.compose.AsyncImage
 import kotlinproject.composeapp.generated.resources.Res
 import kotlinproject.composeapp.generated.resources.toto
 import org.example.project.model.Photographer
+import org.example.project.ui.LocationPermissionButton
 import org.example.project.ui.MyError
+import org.example.project.ui.MyPermissionState
 import org.example.project.viewmodel.MainViewModel
 import org.jetbrains.compose.resources.painterResource
 
@@ -61,16 +64,21 @@ fun SearchScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-
         var searchText = remember { mutableStateOf("") }
         val list = mainViewModel.dataList.collectAsStateWithLifecycle().value.filter { it.stageName.contains(searchText.value, true) }
         val errorMessage by mainViewModel.errorMessage.collectAsStateWithLifecycle()
         val runInProgress by mainViewModel.runInProgress.collectAsStateWithLifecycle()
 
+        var permissionState by remember { mutableStateOf(MyPermissionState.NotDetermined) }
+        val location by mainViewModel.location.collectAsStateWithLifecycle()
 
         SearchBar(searchText = searchText)
 
         MyError(errorMessage = errorMessage)
+
+        LaunchedEffect(Unit) {
+            mainViewModel.updateLocation()
+        }
 
         AnimatedVisibility(visible = runInProgress) {
             CircularProgressIndicator()
@@ -114,7 +122,15 @@ fun SearchScreen(
                 Spacer(Modifier.size(ButtonDefaults.IconSpacing))
                 Text("Load data")
             }
+
+            LocationPermissionButton { permissionResult ->
+                permissionState = permissionResult
+                //J'ai la permission j'update la location
+                mainViewModel.updateLocation()
+            }
         }
+        Text(text = "Permission : ${permissionState.name}")
+        Text(text = "Location : $location")
     }
 }
 
