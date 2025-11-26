@@ -68,8 +68,9 @@ kotlin {
             //Base de données
             implementation("app.cash.sqldelight:android-driver:2.1.0")
 
-            implementation("dev.icerock.moko:permissions:0.18.0")
-            implementation("dev.icerock.moko:permissions-compose:0.18.0")
+            implementation("dev.icerock.moko:permissions:0.20.1")
+            implementation("dev.icerock.moko:permissions-compose:0.20.1")
+            implementation("dev.icerock.moko:permissions-location:0.20.1")
 
             implementation("com.google.android.gms:play-services-location:21.+")
 
@@ -132,8 +133,9 @@ kotlin {
             implementation("io.ktor:ktor-client-darwin:3.2.2")
             implementation("app.cash.sqldelight:native-driver:2.1.0")
 
-            implementation("dev.icerock.moko:permissions:0.18.0")
-            implementation("dev.icerock.moko:permissions-compose:0.18.0")
+            implementation("dev.icerock.moko:permissions:0.20.1")
+            implementation("dev.icerock.moko:permissions-compose:0.20.1")
+            implementation("dev.icerock.moko:permissions-location:0.20.1")
         }
 
     }
